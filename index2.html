@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MinuteMatters — Book appointments in seconds. Find doctors and salons near you without the wait. Your time is precious, spend it better." />
+  <meta name="keywords" content="MinuteMatters, book doctor, book salon, appointment booking, instant booking, healthcare, beauty" />
+  <meta name="author" content="MinuteMatters" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="MinuteMatters — Every Minute Counts" />
+  <meta property="og:description" content="Book doctors and salons instantly. No waiting, no hassle. Your time is precious." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://minutematters.in" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MinuteMatters — Every Minute Counts" />
+  <meta name="twitter:description" content="Book doctors and salons instantly. No waiting, no hassle." />
+  <link rel="icon" href="hourglass.png" type="image/x-icon">
+  <link rel="canonical" href="https://minutematters.in" />
+  <title>MinuteMatters — Every Minute Counts</title>
+
+  <!-- Fonts: Clash Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --cream: #F5F0E8;
+      --warm-white: #FDFAF4;
+      --charcoal: #1C1C1A;
+      --bark: #3D2B1F;
+      --sage: #5C7A5E;
+      --sage-light: #8AAD8C;
+      --amber: #C8873A;
+      --amber-light: #E8A855;
+      --muted: #8C8880;
+      --card-bg: rgba(255,255,255,0.55);
+      --border: rgba(60,50,40,0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ── Background texture & grain ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 30%, rgba(200,135,58,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 70% at 20% 80%, rgba(92,122,94,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(245,240,232,1) 0%, #EDE8DC 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* ── Floating orbs ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      animation: orbFloat 1.4s ease forwards;
+    }
+    .orb-1 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(200,135,58,0.18), transparent 70%);
+      top: -80px; right: -60px;
+      animation-delay: 0.6s;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(92,122,94,0.14), transparent 70%);
+      bottom: -60px; left: -40px;
+      animation-delay: 0.8s;
+    }
+    @keyframes orbFloat {
+      to { opacity: 1; }
+    }
+
+    /* ── Wrapper ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+
+    /* ── Logo mark ── */
+    .logo-mark {
+      width: 52px;
+      height: 52px;
+      background: var(--charcoal);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(12px) scale(0.9);
+      animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+      box-shadow: 0 4px 20px rgba(28,28,26,0.18);
+    }
+    .logo-mark svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* ── Brand ── */
+    .brand {
+      font-size: clamp(13px, 3vw, 14px);
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+    }
+
+    /* ── Headline ── */
+    .headline {
+      font-size: clamp(34px, 9vw, 54px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+    }
+    .headline em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--amber);
+    }
+
+    /* ── Subline ── */
+    .subline {
+      font-size: clamp(14px, 3.5vw, 16px);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 380px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.45s forwards;
+    }
+
+    /* ── Cards ── */
+    .cards {
+      display: flex;
+      gap: 14px;
+      width: 100%;
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.58s forwards;
+    }
+
+    .card {
+      flex: 1;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--charcoal);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 60%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(28,28,26,0.12);
+      border-color: rgba(60,50,40,0.2);
+    }
+
+    .card.disabled {
+      cursor: not-allowed;
+      opacity: 0.62;
+    }
+    .card.disabled:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--border);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .card-icon.doctor { background: rgba(92,122,94,0.14); }
+    .card-icon.salon  { background: rgba(200,135,58,0.12); }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-weight: 400;
+    }
+
+    .card-cta {
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .card.doctor-card .card-cta { color: var(--sage); }
+    .card.salon-card  .card-cta { color: var(--amber); }
+
+    .card-cta svg {
+      transition: transform 0.25s ease;
+    }
+    .card:hover .card-cta svg {
+      transform: translateX(4px);
+    }
+
+    /* Badge */
+    .badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(200,135,58,0.14);
+      color: var(--amber);
+      border: 1px solid rgba(200,135,58,0.25);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    /* ── Tagline strip ── */
+    .tagline-strip {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.78s forwards;
+    }
+    .strip-dot {
+      width: 4px; height: 4px;
+      background: var(--border);
+      border-radius: 50%;
+    }
+    .strip-item {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      font-weight: 400;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      html, body { overflow: hidden; }
+      .cards { flex-direction: column; gap: 12px; }
+      .card { padding: 22px 18px 18px; }
+      .headline { font-size: 36px; }
+      .tagline-strip { flex-wrap: wrap; justify-content: center; gap: 12px; }
+      .strip-dot { display: none; }
+    }
+
+    @media (max-width: 360px) {
+      .headline { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <main class="wrapper" role="main">
+
+    <!-- Logo mark -->
+    <!-- <div class="logo-mark" aria-hidden="true">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="13" r="10" stroke="#F5F0E8" stroke-width="1.8"/>
+        <path d="M13 7.5V13.5L16.5 16" stroke="#C8873A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div> -->
+
+    <p class="brand">MinuteMatters</p>
+
+    <h1 class="headline">Your time<br />is <em>precious.</em></h1>
+
+    <p class="subline">Book a doctor or a salon chair in seconds — no calls, no queues, no wasted minutes.</p>
+
+    <div class="cards">
+
+      <!-- Doctor card -->
+      <a class="card doctor-card" target="_blank" href="https://doctor.minutematters.in" rel="noopener noreferrer" aria-label="Book a Doctor appointment">
+        <div class="card-icon doctor" aria-hidden="true">🩺</div>
+        <p class="card-title">Book Doctor</p>
+        <p class="card-desc">Find and book verified doctors near you, instantly.</p>
+        <span class="card-cta">
+          Book now
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2.5 7H11.5M7.5 3L11.5 7L7.5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+      <!-- Salon card (disabled) -->
+      <div class="card salon-card disabled" role="button" aria-disabled="true" aria-label="Book Salon — Coming Soon" tabindex="-1">
+        <span class="badge">Coming Soon</span>
+        <div class="card-icon salon" aria-hidden="true">✂️</div>
+        <p class="card-title">Book Salon</p>
+        <p class="card-desc">Premium salons, real-time slots. Almost here.</p>
+        <span class="card-cta">
+          Stay tuned
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2.5 7H11.5M7.5 3L11.5 7L7.5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+
+    </div>
+
+    <div class="tagline-strip" aria-label="Features">
+      <span class="strip-item">⚡ Instant booking</span>
+      <span class="strip-dot"></span>
+      <span class="strip-item">📍 Near you</span>
+      <span class="strip-dot"></span>
+      <span class="strip-item">🕐 Zero wait</span>
+    </div>
+
+  </main>
+
+  <script>
+    // Prevent any accidental scroll
+    document.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+    document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+    // Disabled salon card — show a subtle shake on click
+    const salonCard = document.querySelector('.salon-card');
+    salonCard.addEventListener('click', () => {
+      salonCard.style.animation = 'none';
+      salonCard.style.transform = 'translateX(-4px)';
+      setTimeout(() => { salonCard.style.transform = 'translateX(4px)'; }, 80);
+      setTimeout(() => { salonCard.style.transform = 'translateX(-2px)'; }, 160);
+      setTimeout(() => { salonCard.style.transform = 'translateX(0)'; }, 240);
+    });
+  </script>
+
+</body>
+</html>
